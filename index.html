@@ -1,0 +1,395 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ImobCore</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="./assets/logo.png" alt="ImobCore" />
+        </div>
+        <div>
+          <div class="brand-title">ImobCore</div>
+          <div class="brand-sub">Imóveis e Contratos</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-btn active" data-page="dashboard">Dashboard</button>
+        <button class="nav-btn" data-page="proprietarios">Proprietários</button>
+        <button class="nav-btn" data-page="locatarios">Locatários</button>
+        <button class="nav-btn" data-page="imoveis">Imóveis</button>
+        <button class="nav-btn" data-page="contratos">Contratos</button>
+        <button class="nav-btn" data-page="recibos">Recibos</button>
+        <button class="nav-btn" data-page="financeiro">Financeiro</button>
+        <button class="nav-btn" data-page="pendencias">Pendências</button>
+        <button class="nav-btn" data-page="indices">Índices</button>
+        <button class="nav-btn" data-page="iptu">IPTU</button>
+        <button class="nav-btn" data-page="relatorios">Relatórios</button>
+        <button class="nav-btn" data-page="backup">Backup</button>
+        <button class="nav-btn" data-page="emissor">Dados do recibo</button>
+        <button class="nav-btn" data-page="comousar">Como usar</button>
+        <button class="nav-btn" data-page="sobre">Sobre</button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="foot-brand">GHZ Plugin</div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="page active" id="page-dashboard">
+        <h1>Dashboard Imobiliário</h1>
+        <p class="sub">Visão geral dos imóveis, contratos e vencimentos.</p>
+
+        <div class="kpis">
+          <div class="kpi"><div class="kpi-label">Imóveis cadastrados</div><div id="kpiImoveis" class="kpi-value">0</div></div>
+          <div class="kpi"><div class="kpi-label">Imóveis alugados</div><div id="kpiAlugados" class="kpi-value">0</div></div>
+          <div class="kpi"><div class="kpi-label">Contratos ativos</div><div id="kpiContratos" class="kpi-value">0</div></div>
+          <div class="kpi"><div class="kpi-label">Valor mensal total</div><div id="kpiValor" class="kpi-value">R$ 0,00</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Vencimentos em até 60 dias</div>
+          <table>
+            <thead><tr><th>Imóvel</th><th>Locatário</th><th>Fim do contrato</th><th>Dias restantes</th><th>Valor</th></tr></thead>
+            <tbody id="tbAlertas"><tr><td colspan="5" class="empty">Nenhum vencimento próximo.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="page" id="page-proprietarios">
+        <h1>Proprietários</h1>
+        <p class="sub">Cadastro dos donos dos imóveis.</p>
+        <div class="card">
+          <div class="grid">
+            <input id="propNome" placeholder="Nome completo *" />
+            <input id="propDoc" placeholder="CPF/CNPJ" />
+            <input id="propRg" placeholder="RG" />
+            <input id="propTel" placeholder="Telefone" />
+            <input id="propEmail" placeholder="E-mail" />
+            <input id="propEndereco" placeholder="Endereço completo" /><input id="propBanco" placeholder="Banco" /><input id="propAgencia" placeholder="Agência" /><input id="propConta" placeholder="Conta" /><input id="propPix" placeholder="Chave PIX" />
+          </div>
+          <button class="btn primary" id="btnSalvarProp">Salvar proprietário</button>
+        </div>
+        <div class="card">
+          <div class="toolbar">
+            <input id="buscaProp" placeholder="Buscar proprietário..." />
+          </div>
+          <table>
+            <thead><tr><th>Nome</th><th>CPF/CNPJ / RG</th><th>Contato</th><th>Endereço</th><th>Dados bancários</th><th>Ações</th></tr></thead>
+            <tbody id="tbProp"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="page" id="page-locatarios">
+        <h1>Locatários</h1>
+        <p class="sub">Cadastro de inquilinos.</p>
+        <div class="card">
+          <div class="grid">
+            <input id="locNome" placeholder="Nome completo *" />
+            <input id="locDoc" placeholder="CPF/CNPJ" />
+            <input id="locRg" placeholder="RG" />
+            <input id="locTel" placeholder="Telefone" />
+            <input id="locEmail" placeholder="E-mail" />
+            <input id="locEndereco" placeholder="Endereço completo" />
+          </div>
+          <button class="btn primary" id="btnSalvarLoc">Salvar locatário</button>
+        </div>
+        <div class="card">
+          <div class="toolbar">
+            <input id="buscaLoc" placeholder="Buscar locatário..." />
+          </div>
+          <table>
+            <thead><tr><th>Nome</th><th>CPF/CNPJ / RG</th><th>Contato</th><th>Endereço</th><th>Ações</th></tr></thead>
+            <tbody id="tbLoc"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="page" id="page-imoveis">
+        <h1>Imóveis</h1>
+        <p class="sub">Cadastro residencial e comercial.</p>
+        <div class="card">
+          <div class="grid">
+            <input id="imoCodigo" placeholder="Código automático" />
+            <select id="imoTipo">
+              <option value="RESIDENCIAL">Residencial</option>
+              <option value="COMERCIAL">Comercial</option>
+            </select>
+            <input id="imoDescricao" placeholder="Descrição do imóvel *" />
+            <input id="imoEndereco" placeholder="Endereço completo *" />
+            <input id="imoCep" placeholder="CEP" />
+            <select id="imoProprietario"></select>
+            <select id="imoLocatario"></select>
+            <input id="imoBanco" placeholder="Banco/Conta para depósito" />
+            <select id="imoStatus">
+              <option value="NAO">Não alugado</option>
+              <option value="SIM">Alugado</option>
+            </select>
+          </div>
+          <button class="btn primary" id="btnSalvarImovel">Salvar imóvel</button>
+        </div>
+        <div class="card">
+          <div class="toolbar">
+            <input id="buscaImovel" placeholder="Buscar imóvel, proprietário ou código..." />
+          </div>
+          <table>
+            <thead><tr><th>Código / Imóvel</th><th>Proprietário</th><th>Locatário</th><th>Aluguel + despesas</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="tbImovel"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="page" id="page-contratos">
+        <h1>Contratos de Aluguel</h1>
+        <p class="sub">Cadastro de período e valores do contrato.</p>
+        <div class="card">
+          <div class="grid">
+            <select id="conImovel"></select>
+            <select id="conLocatario"></select>
+            <input id="conInicio" type="date" />
+            <input id="conFim" type="date" />
+            <input id="conVencimentoDia" type="number" min="1" max="31" placeholder="Dia de vencimento" />
+            <input id="conValor" placeholder="Valor aluguel" />
+            <input id="conIptu" placeholder="IPTU" />
+            <input id="conCondominio" placeholder="Condomínio" />
+            <input id="conSeguro" placeholder="Seguro" />
+            <input id="conOutros" placeholder="Outros" />
+            <input id="conTaxaAdm" placeholder="Taxa adm." />
+            <select id="conIndiceReajuste"><option value="">Sem índice automático</option><option value="IGPM">IGP-M</option><option value="IPCA">IPCA</option><option value="INPC">INPC</option></select><input id="conProximoReajuste" type="date" title="Próximo reajuste" />
+            <select id="conTipoRecibo">
+              <option value="RESIDENCIAL">Recibo residencial</option>
+              <option value="COMERCIAL">Recibo comercial</option>
+            </select>
+            <input id="conObs" placeholder="Observações" />
+          </div>
+          <button class="btn primary" id="btnSalvarContrato">Salvar contrato</button>
+        </div>
+        <div class="card">
+          <div class="toolbar">
+            <input id="buscaContrato" placeholder="Buscar por imóvel ou locatário..." />
+          </div>
+          <table>
+            <thead><tr><th>Imóvel</th><th>Locatário</th><th>Período</th><th>Vencimento</th><th>Valor total</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="tbContrato"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="page" id="page-pendencias"><h1>Pagamentos Pendentes</h1><p class="sub">Cobranças a vencer e vencidas.</p><div class="card"><div class="grid"><input id="pendDataRef" type="date" /><select id="pendSituacao"><option value="">Todas</option><option value="AVENCER">A vencer</option><option value="VENCIDO">Vencidas</option></select></div><button class="btn primary" id="btnFiltrarPend">Atualizar</button></div><div class="card"><table><thead><tr><th>Vencimento</th><th>Imóvel</th><th>Locatário</th><th>Competência</th><th>Valor</th><th>Situação</th></tr></thead><tbody id="tbPendencias"></tbody></table></div></section>
+      <section class="page" id="page-indices"><h1>Índices de Reajuste</h1><div class="card"><div class="grid"><select id="idxTipo"><option value="IGPM">IGP-M</option><option value="IPCA">IPCA</option><option value="INPC">INPC</option></select><input id="idxCompetencia" type="month" /><input id="idxPercentual" placeholder="Percentual (%)" /></div><div class="actions"><button class="btn primary" id="btnSalvarIndice">Salvar índice</button><button class="btn" id="btnAplicarReajustes">Aplicar reajustes vencidos</button></div></div><div class="card"><table><thead><tr><th>Índice</th><th>Competência</th><th>Percentual</th><th>Ações</th></tr></thead><tbody id="tbIndices"></tbody></table></div></section>
+      <section class="page" id="page-iptu"><h1>Controle de IPTU</h1><div class="card"><div class="grid"><select id="iptuImovel"></select><input id="iptuContribuinte" placeholder="Número do contribuinte" /><input id="iptuCompetencia" type="month" /><input id="iptuVencimento" type="date" /><input id="iptuValor" placeholder="Valor" /><select id="iptuStatus"><option value="PENDENTE">Pendente</option><option value="PAGO">Pago</option></select><input id="iptuObs" placeholder="Observações" /></div><button class="btn primary" id="btnSalvarIptu">Salvar lançamento</button></div><div class="card"><table><thead><tr><th>Imóvel</th><th>Contribuinte</th><th>Competência</th><th>Vencimento</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tbIptu"></tbody></table></div></section>
+
+      <section class="page" id="page-recibos">
+        <h1>Recibos</h1>
+        <p class="sub">Gerar recibo de aluguel para impressão.</p>
+        <div class="card">
+          <div class="grid">
+            <select id="recContrato"></select>
+            <input id="recMesAno" type="month" />
+            <select id="recPago">
+              <option value="SIM">Aluguel pago</option>
+              <option value="NAO">Aluguel não pago</option>
+            </select>
+            <input id="recValorManual" placeholder="Valor (opcional, se diferente)" />
+          </div>
+          <div class="actions">
+            <button class="btn primary" id="btnGerarRecibo">Gerar recibo</button>
+            <button class="btn" id="btnImprimirRecibo">Imprimir</button>
+            <button class="btn ghost" id="btnSalvarRecibo">Salvar no histórico</button>
+          </div>
+          <textarea id="prevRecibo" class="big-text" placeholder="Prévia do recibo..."></textarea>
+        </div>
+        <div class="card">
+          <table>
+            <thead><tr><th>Data</th><th>Imóvel</th><th>Locatário</th><th>Competência</th><th>Valor</th><th>Pago</th></tr></thead>
+            <tbody id="tbRecibos"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="page" id="page-financeiro">
+        <h1>Financeiro</h1>
+        <p class="sub">Baixas de locatários, repasses para proprietários e extratos demonstrativos.</p>
+
+        <div class="card">
+          <div class="card-title">Baixa de pagamento do locatário</div>
+          <div class="grid">
+            <select id="finContrato"></select>
+            <input id="finCompetencia" type="month" />
+            <input id="finData" type="date" />
+            <input id="finValor" placeholder="Valor recebido" />
+            <select id="finStatus">
+              <option value="PAGO">Pago</option>
+              <option value="PENDENTE">Pendente</option>
+              <option value="PARCIAL">Parcial</option>
+            </select>
+            <input id="finObs" placeholder="Observações da baixa" />
+          </div>
+          <button class="btn primary" id="btnSalvarPagamento">Salvar baixa do locatário</button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Repasse para proprietário</div>
+          <div class="grid">
+            <select id="repContrato"></select>
+            <input id="repCompetencia" type="month" />
+            <input id="repData" type="date" />
+            <input id="repValorBruto" placeholder="Valor bruto recebido" />
+            <input id="repTaxaAdm" placeholder="Taxa administrativa" />
+            <input id="repDespesas" placeholder="Despesas/descontos" />
+            <input id="repValorLiquido" placeholder="Valor líquido repassado" />
+            <input id="repObs" placeholder="Observações do repasse" />
+          </div>
+          <button class="btn primary" id="btnSalvarRepasse">Salvar repasse ao proprietário</button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Extrato demonstrativo</div>
+          <div class="grid">
+            <select id="extContrato"></select>
+            <input id="extCompetencia" type="month" />
+          </div>
+          <div class="actions">
+            <button class="btn primary" id="btnGerarExtrato">Gerar extrato</button>
+            <button class="btn" id="btnImprimirExtrato">Imprimir extrato</button>
+          </div>
+          <div id="prevExtrato" class="statement-preview">
+            Selecione um contrato e uma competência para gerar o extrato demonstrativo.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Histórico financeiro</div>
+          <div class="finance-grid">
+            <div>
+              <h3>Pagamentos recebidos</h3>
+              <table>
+                <thead><tr><th>Data</th><th>Competência</th><th>Locatário</th><th>Valor</th><th>Status</th><th>Ações</th></tr></thead>
+                <tbody id="tbPagamentos"></tbody>
+              </table>
+            </div>
+            <div>
+              <h3>Repasses ao proprietário</h3>
+              <table>
+                <thead><tr><th>Data</th><th>Competência</th><th>Proprietário</th><th>Líquido</th><th>Ações</th></tr></thead>
+                <tbody id="tbRepasses"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-relatorios">
+        <h1>Relatórios</h1>
+        <p class="sub">Filtros e visão consolidada para gestão.</p>
+        <div class="card">
+          <div class="grid">
+            <select id="filtroTipo">
+              <option value="">Todos os tipos</option>
+              <option value="RESIDENCIAL">Residencial</option>
+              <option value="COMERCIAL">Comercial</option>
+            </select>
+            <select id="filtroStatus">
+              <option value="">Todos status</option>
+              <option value="SIM">Alugado</option>
+              <option value="NAO">Não alugado</option>
+            </select>
+            <input id="filtroMesAno" type="month" />
+            <select id="filtroPago">
+              <option value="">Pago e não pago</option>
+              <option value="SIM">Somente pago</option>
+              <option value="NAO">Somente não pago</option>
+            </select>
+          </div>
+          <button class="btn primary" id="btnFiltrarRel">Filtrar dados</button>
+        </div>
+        <div class="card">
+          <div class="toolbar">
+            <div id="resumoRel">Total de registros: 0 | Total: R$ 0,00</div>
+            <button class="btn" id="btnImprimirRel">Imprimir relatório</button>
+          </div>
+          <table>
+            <thead><tr><th>Código</th><th>Imóvel</th><th>Locado</th><th>Proprietário</th><th>Locatário</th><th>Tipo</th><th>Valor</th><th>Mês</th><th>Ano</th><th>Pago</th></tr></thead>
+            <tbody id="tbRel"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="page" id="page-emissor">
+        <h1>Dados do Recibo</h1>
+        <p class="sub">Preencha os dados do emissor para sair automaticamente nos recibos.</p>
+        <div class="card">
+          <div class="grid">
+            <input id="emNome" placeholder="Nome do responsável / emissor" />
+            <input id="emEmpresa" placeholder="Nome da empresa / imobiliária" />
+            <input id="emCpf" placeholder="CPF do emissor" />
+            <input id="emCnpj" placeholder="CNPJ da empresa" />
+            <input id="emTelefone" placeholder="Telefone" />
+            <input id="emEmail" placeholder="E-mail" />
+            <input id="emEndereco" placeholder="Endereço completo" />
+            <input id="emCidadeUf" placeholder="Cidade / UF" />
+            <input id="emLogo" type="file" accept="image/*" />
+          </div>
+          <button class="btn primary" id="btnSalvarEmissor">Salvar dados do recibo</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Resumo atual do emissor</div>
+          <div id="emissorResumo" class="info-list">Nenhum dado salvo.</div>
+        </div>
+      </section>
+      <section class="page" id="page-backup"><h1>Backup e Restauração</h1><div class="card"><div class="actions"><button class="btn primary" id="btnExportarBackup">Baixar backup</button><label class="btn" for="arquivoBackup">Selecionar backup</label><input id="arquivoBackup" type="file" accept="application/json,.json" hidden /><button class="btn" id="btnRestaurarBackup">Restaurar backup selecionado</button></div><div id="backupStatus" class="info-list">Nenhum arquivo selecionado.</div></div></section>
+
+      <section class="page" id="page-comousar">
+        <h1>Como Usar</h1>
+        <p class="sub">Guia rápido para usar cada aba do ImobCore.</p>
+        <div class="card">
+          <div class="guide-item"><h3>1) Proprietários</h3><p>Cadastre os donos dos imóveis com nome e contato.</p></div>
+          <div class="guide-item"><h3>2) Locatários</h3><p>Cadastre os inquilinos que vão assinar contratos.</p></div>
+          <div class="guide-item"><h3>3) Imóveis</h3><p>Cadastre cada imóvel, vinculando ao proprietário.</p></div>
+          <div class="guide-item"><h3>4) Contratos</h3><p>Crie contratos com datas, vencimento e valores mensais.</p></div>
+          <div class="guide-item"><h3>5) Dados do Recibo</h3><p>Preencha seus dados para sair automaticamente no recibo impresso.</p></div>
+          <div class="guide-item"><h3>6) Recibos</h3><p>Gere, visualize, imprima e salve o histórico mensal de recibos.</p></div>
+          <div class="guide-item"><h3>7) Financeiro</h3><p>Registre baixas do locatário, repasses ao proprietário e gere extratos demonstrativos.</p></div>
+          <div class="guide-item"><h3>8) Relatórios</h3><p>Filtre por tipo, status, mês e pagamento para análise de carteira.</p></div>
+          <div class="guide-item"><h3>9) Dashboard</h3><p>Veja indicadores e vencimentos próximos de forma rápida.</p></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-sobre">
+        <h1>Sobre</h1>
+        <p class="sub">Informações do sistema ImobCore.</p>
+        <div class="card">
+          <div class="guide-item"><h3>Sobre o Sistema</h3><p>ImobCore é um sistema desktop para controle de imóveis, contratos de aluguel, recibos e relatórios gerenciais.</p></div>
+          <div class="guide-item"><h3>Funcionalidades</h3><p>Cadastro de proprietários, locatários e imóveis, gestão de contratos, geração de recibos, painel de vencimentos e relatórios para impressão.</p></div>
+          <div class="guide-item"><h3>Desenvolvido por</h3><p>GHZ Plugin</p></div>
+          <div class="guide-item"><h3>Contatos</h3><p>E-mail: ghzplugin@gmail.com<br>Telefone: (11) 94898-1459</p></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
+
+  <div id="confirmHost" class="confirm-host hidden" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="confirm-card">
+      <div id="confirmTitle" class="confirm-title">Confirmar ação</div>
+      <p id="confirmMessage" class="confirm-message">Tem certeza?</p>
+      <div class="confirm-actions">
+        <button id="confirmCancel" class="btn ghost" type="button">Cancelar</button>
+        <button id="confirmOk" class="btn primary" type="button">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/util.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
