@@ -1,15 +1,9 @@
-﻿const { app, BrowserWindow } = require('electron')
+﻿const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
-function ensureDataDir() {
-  const dataDir = path.join(app.getPath('userData'), 'data')
-  fs.mkdirSync(dataDir, { recursive: true })
-  return dataDir
-}
-
 function createWindow() {
-  const dataDir = ensureDataDir()
+  const dataDir = getDataDir()
   const win = new BrowserWindow({
     width: 1460,
     height: 920,
@@ -34,6 +28,18 @@ function createWindow() {
 
   win.loadFile('index.html')
 }
+
+function getDataDir() {
+  const dataDir = path.join(app.getPath('userData'), 'data')
+  if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true })
+  return dataDir
+}
+
+require('./js/ghz-backend')({
+  app, ipcMain, getDataDir,
+  appId: 'imobcore',
+  manifestUrl: 'https://raw.githubusercontent.com/GhuzzBeatz/ImobCore/master/update-manifest.json'
+})
 
 app.whenReady().then(createWindow)
 

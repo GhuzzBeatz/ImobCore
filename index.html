@@ -35,6 +35,7 @@
         <button class="nav-btn" data-page="emissor">Dados do recibo</button>
         <button class="nav-btn" data-page="comousar">Como usar</button>
         <button class="nav-btn" data-page="sobre">Sobre</button>
+        <button class="nav-btn" data-page="atualizacao">Atualização</button>
       </nav>
 
       <div class="sidebar-foot">
@@ -363,6 +364,14 @@
         </div>
       </section>
 
+      <section class="page" id="page-atualizacao">
+        <h1>Atualização</h1>
+        <p class="sub">Verifique e instale novas versões do ImobCore.</p>
+        <div class="card">
+          <iframe id="frameAtualizacao" src="./pages/atualizacao.html" style="width:100%;min-height:480px;border:none;border-radius:10px"></iframe>
+        </div>
+      </section>
+
       <section class="page" id="page-sobre">
         <h1>Sobre</h1>
         <p class="sub">Informações do sistema ImobCore.</p>
@@ -389,6 +398,14 @@
     </div>
   </div>
 
+  <script src="./js/licenca.js"></script>
+  <script>
+    ;(function () {
+      if (typeof window.ghzLicense !== 'undefined' && !window.ghzLicense.cacheActive()) {
+        window.location.replace('./pages/licenca.html')
+      }
+    })()
+  </script>
   <script src="./js/util.js"></script>
   <script src="./js/app.js"></script>
 </body>
