@@ -152,7 +152,8 @@ module.exports = function setup(config) {
 
   async function checkUpdate(source) {
     try {
-      const raw = await httpGet(manifestUrl)
+      const bustUrl = manifestUrl + (manifestUrl.includes('?') ? '&' : '?') + '_t=' + Date.now()
+      const raw = await httpGet(bustUrl)
       const m = JSON.parse(raw)
       if (!m.version) throw new Error('Manifesto sem version')
       const current = app.getVersion()
