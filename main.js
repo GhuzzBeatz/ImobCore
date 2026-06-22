@@ -35,13 +35,14 @@ function getDataDir() {
   return dataDir
 }
 
-require('./js/ghz-backend')({
-  app, ipcMain, getDataDir,
-  appId: 'imobcore',
-  manifestUrl: 'https://raw.githubusercontent.com/GhuzzBeatz/ImobCore/master/update-manifest.json'
+app.whenReady().then(() => {
+  require('./js/ghz-backend')({
+    app, ipcMain, getDataDir,
+    appId: 'imobcore',
+    manifestUrl: 'https://raw.githubusercontent.com/GhuzzBeatz/ImobCore/master/update-manifest.json'
+  })
+  createWindow()
 })
-
-app.whenReady().then(createWindow)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
